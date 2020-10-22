@@ -1,45 +1,44 @@
-let array = [];
-let backgroundColor = 200;
+
+let noiseOffset = 0.0;
+let strokeWidth = 5;
 
 function setup() {
-  createCanvas(600, 600);
-  background(backgroundColor);
+  createCanvas(windowWidth, windowWidth);
+  background(3, 132, 252);
 
-  strokeWeight(5);
-  noFill();
+
+
 }
 
 function draw() {
-  if(mouseIsPressed == true){
-    backgroundColor -=2;
-    background(backgroundColor);
-    //line(mouseX, mouseY, pmouseX, pmouseY);
-    array.push([mouseX, mouseY]);
-    //line(mouseX, mouseY, pmouseX, pmouseY);
+    background(3, 132, 252, 20);
+    strokeWeight(strokeWidth);
 
-    beginShape();
-      for(let i = 0; i < array.length - 1; i++){
-        //line(array[i][0], array[i][1], array[i + 1][0], array[i + 1][1]);
-        curveVertex(array[i][0], array[i][1])
-      }
-        endShape();
+    noiseOffset += 0.05;
+    strokeWidth = noise(noiseOffset) * 100;
+
+
+    stroke(map(mouseX, 0, 600, 0, 255, true));
+    line(width - mouseX, height - mouseY, width - pmouseX, height - pmouseY);
+    line(mouseX, mouseY, pmouseX, pmouseY);
   }
-}
 
 function keyType(){
+
   if (key === 's'){
     saveCanvas('fileName', 'png');
-  } else if (key === 'd') {
-    background(255);
+  } else if (key === 'c') { //clear
+    clear();
 
-    beginShape();
-      for(let i = 0; i < array.length - 1; i++){
-        //line(array[i][0], array[i][1], array[i + 1][0], array[i + 1][1]);
-        curveVertex(array[i][0], array[i][1])
-      }
-        endShape();
 
+    // beginShape();
+    //   for(let i = 0; i < array.length - 1; i++){
+    //     //line(array[i][0], array[i][1], array[i + 1][0], array[i + 1][1]);
+    //     curveVertex(array[i][0], array[i][1])
+    //   }
+    //     endShape();
   }
-  return false;
-  //saving image of canvas
 }
+
+//  return false;
+//}
